@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<meta charset="UTF-8">
@@ -39,7 +39,7 @@
 
 						<div class="d-flex justify-content-end align-items-end mb-3">
 							<div>
-								<a href="#">編集</a>
+								  <a th:href="@{/admin/houses/__${house.getId()}__/edit}">編集</a>
 							</div>
 						</div>
 

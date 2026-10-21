@@ -195,7 +195,38 @@
 
  	}
 
+ 	.samuraitravel_1-link-danger {
 
+ 		color: #f2594b;
+
+ 	}
+
+ 	.samuraitravel_1-link-danger_hover {
+
+ 		color: #a63c3c;
+
+ 	}
+
+ 	.samuraitravel_1-btn-danger {
+
+ 		background-color: #f2594b !important;
+
+ 		transform: 0.1s;
+ 	}
+
+ 	.samuraitravel_1-btn-danger-hover {
+
+ 		opacity: 0.8;
+
+ 	}
+
+
+ 	.samuraitravel_1-dropdown-item:active {
+
+ 		background-color: #5196a6;
+
+
+ 	}
 
  	@media screen and (min-width: 1400px) {
 
