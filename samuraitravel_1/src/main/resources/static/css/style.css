@@ -30,6 +30,12 @@
 
  }
 
+ h2 {
+
+ 	font-size: 1.475rem;
+
+ }
+
  h3 {
 
  	font-size: 1.25rem;
@@ -257,6 +263,41 @@
 
  	}
 
+ 	.samuraitravel_1-sort-box {
+
+ 		width: 150px;
+
+
+ 	}
+
+ 	.samuraitravel_1-vertical-card-image {
+
+ 		width: 100%;
+
+ 		height: 150px;
+
+ 		object-fit: cover;
+
+
+ 	}
+
+ 	.samuraitravel_1-search-form {
+
+ 		max-width: 300px;
+
+ 	}
+
+
+
+
+
+
+
+
+
+
+
+
  	@media screen and (min-width: 1400px) {
 
 
@@ -270,4 +311,5 @@
 
 
  	}
+
  }
