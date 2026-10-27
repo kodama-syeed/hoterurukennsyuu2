@@ -25,7 +25,7 @@ public class ReservationInputForm {
 
 		String[] checkinDataAndCheckoutDate = getFromCheckinDateToCheckoutDate().split("から");
 
-		return LocalDate.parse(checkinDataAndCheckoutDate[0]);
+		return LocalDate.parse(checkinDataAndCheckoutDate[0].trim());
 
 	}
 
@@ -33,7 +33,7 @@ public class ReservationInputForm {
 
 		String[] checkinDateAndCheckoutDate = getFromCheckinDateToCheckoutDate().split("から");
 
-		return LocalDate.parse(checkinDateAndCheckoutDate[1]);
+		return LocalDate.parse(checkinDateAndCheckoutDate[1].trim());
 
 	}
 
