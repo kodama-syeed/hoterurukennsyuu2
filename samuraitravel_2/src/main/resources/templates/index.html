@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 
 
 <head>
@@ -13,7 +13,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-	<title>samurai Travel_2</title>
+	<div th:replace="~{fragment :: meta}"></div>
+
+
+
+
+	<div th:replace="~{fragment :: styles}"></div>
+
+
+
+
+
+	<title>samurai Travel</title>
 
 
 </head>
@@ -23,6 +34,72 @@
 
 
 	<p>Hello, world!</p>
+
+
+	<div class="samuraitravel_2-wrapper">
+
+
+		<!-- ヘッダー -->
+
+
+		<div th:replace="~{fragment :: header}"></div>
+
+
+
+
+
+		<main>
+
+
+			<div class="container pt-4 pb-5 samuraitravel_2-container">
+
+
+				<div th:if="${param.loggedIn}" class="alert alert-info">
+
+
+					ログインしました。
+
+
+				</div>
+
+
+
+
+
+				<div th:if="${param.loggedOut}" class="alert alert-info">
+
+
+					ログアウトしました。
+
+
+					<div th:if="${successMessage}" class="alert alert-info">
+
+						<span th:text="${successMessage}"></span>
+
+					</div>
+
+				</div>
+
+		</main>
+
+
+
+
+
+
+		<!-- フッター -->
+
+
+		<div th:replace="~{fragment :: footer}"></div>
+
+
+	</div>
+
+
+
+
+
+	<div th:replace="~{fragment :: scripts}"></div>
 
 
 </body>
