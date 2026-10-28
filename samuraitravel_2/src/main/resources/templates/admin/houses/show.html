@@ -41,11 +41,11 @@
 
 <body>
 
-	<div class="moattravel-wrapper">
+	<div class="samuraitravel_2-wrapper">
 
 		<!-- ヘッダー -->
 
-		
+
 		<div th:replace="~{fragment :: header}"></div>
 
 
@@ -100,7 +100,7 @@
 									<div>
 
 
-										<a href="#">編集</a>
+										<a th:href="@{/admin/houses/__${house.getId()}__/edit}">編集</a>
 
 
 									</div>
@@ -398,7 +398,7 @@
 
 					<div class="d-flex justify-content-center align-items-center h-100">
 
-						<p class="text-center text-muted small mb-0">&copy; moat Travel All rights reserved.</p>
+						<p class="text-center text-muted small mb-0">&copy; samurai Travel_2 All rights reserved.</p>
 
 					</div>
 

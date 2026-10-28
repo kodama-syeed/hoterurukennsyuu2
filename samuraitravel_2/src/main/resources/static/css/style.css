@@ -64,7 +64,6 @@ footer {
 
 }
 
-
 .samuraitravel_2-active {
 
 
@@ -75,10 +74,6 @@ footer {
 
 
 }
-
-
-
-
 
 .samuraitravel_2-pre-wrap {
 
@@ -91,13 +86,31 @@ footer {
 
 }
 
+.samuraitravel_2-link-danger {
+
+	color: #f2594b;
 
 
+}
+
+.samuraitravel_2-link-danger:hover {
+
+	color: #a63c3c;
 
 
+}
 
+.samuraitravel_2-btn-danger {
 
+	background-color: #f2594b !important;
 
+	transition: 0.1s;
+}
+
+.samuraitravel_2-btn-danger:hover {
+
+	opacity: 0.8;
+}
 
 
 @media screen and (min-width: 1400px) {
