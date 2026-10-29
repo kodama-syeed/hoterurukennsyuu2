@@ -24,7 +24,7 @@
 
 
 
-	<title>samurai Travel</title>
+	<title>samurai Travel_2</title>
 
 
 </head>
@@ -51,36 +51,53 @@
 		<main>
 
 
-			<div class="container pt-4 pb-5 samuraitravel_2-container">
+		                 <div class="container pt-4 pb-5 samuraitravel_2-container">
 
 
-				<div th:if="${param.loggedIn}" class="alert alert-info">
+		                     <div class="row justify-content-center">
 
 
-					ログインしました。
+		                         <div class="col-xl-5 col-lg-6 col-md-8">  
 
 
-				</div>
+		                          
 
 
+		                             <div th:if="${successMessage}" class="alert alert-info">
 
 
-
-				<div th:if="${param.loggedOut}" class="alert alert-info">
-
-
-					ログアウトしました。
+		                                 <span th:text="${successMessage}"></span>
 
 
-					<div th:if="${successMessage}" class="alert alert-info">
+		                            </div> 
 
-						<span th:text="${successMessage}"></span>
 
-					</div>
+		                             
 
-				</div>
 
-		</main>
+		                             <div th:if="${errorMessage}" class="alert alert-danger">
+
+
+		                                 <span th:text="${errorMessage}"></span>
+
+
+		                             </div>
+
+
+		                             
+
+
+		                         </div>
+
+
+		                     </div>
+
+
+		                 </div>
+
+
+		            </main>
+
 
 
 

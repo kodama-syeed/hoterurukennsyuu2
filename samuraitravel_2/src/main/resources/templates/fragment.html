@@ -123,27 +123,31 @@
 
 							</a>
 
-
-
-
-
 							<div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownGeneral">
 
 
-								<a class="dropdown-item samuraitravel_2-dropdown-item" th:href="@{/logout}"
-									onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+								<a class="dropdown-item samuraitravel_2-dropdown-item" th:href="@{/user}">会員情報</a>
 
 
-									ログアウト
 
 
-								</a>
+								<div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownGeneral">
 
 
-								<form class="d-none" id="logout-form" th:action="@{/logout}" method="post"></form>
+									<a class="dropdown-item samuraitravel_2-dropdown-item" th:href="@{/logout}"
+										onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 
 
-							</div>
+										ログアウト
+
+
+									</a>
+
+
+									<form class="d-none" id="logout-form" th:action="@{/logout}" method="post"></form>
+
+
+								</div>
 
 
 						</li>
@@ -173,6 +177,7 @@
 
 							<div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownAdmin">
 
+								<a class="dropdown-item samuraitravel_2-dropdown-item" th:href="@{/admin/users}">会員一覧</a> 
 
 								<a class="dropdown-item samuraitravel_2-dropdown-item"
 									th:href="@{/admin/houses}">民宿一覧</a>
