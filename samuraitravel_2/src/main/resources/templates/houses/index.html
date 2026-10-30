@@ -479,95 +479,99 @@
 
 
 						</div>
-
-
-					</div>
-
-
-
-
-
-					<div class="mb-3" th:each="house : ${housePage}">
-
-
-						<a th:href="@{/houses/__${house.getId()}__}" class="link-dark samuraitravel_2-card-link">
-
-
-							<div class="card h-100">
-
-
-								<div class="row g-0">
-
-
-									<div class="col-md-4">
-
-
-										<img th:if="${house.getImageName()}"
-											th:src="@{/storage/__${house.getImageName()}__}"
-											class="card-img-top samuraitravel_2-horizontal-card-image" alt="店舗画像">
-
-
-										<img th:unless="${house.getImageName()}" th:src="@{/images/noImage.png}"
-											class="card-img-top samuraitravel_2-horizontal-card-image" alt="NO IMAGE">
-
-
-									</div>
-
-
-									<div class="col-md-8">
-
-
-										<div class="card-body">
-
-
-											<h3 class="card-title mb-3" th:text="${house.getName()}"></h3>
+S
 
 
 
 
 
-											<hr class="mb-3">
+
+
+						<div class="mb-3" th:each="house : ${housePage}">
+
+
+							<a th:href="@{/houses/__${house.getId()}__}" class="link-dark samuraitravel_2-card-link">
+
+
+								<div class="card h-100">
+
+
+									<div class="row g-0">
+
+
+										<div class="col-md-4">
+
+
+											<img th:if="${house.getImageName()}"
+												th:src="@{/storage/__${house.getImageName()}__}"
+												class="card-img-top samuraitravel_2-horizontal-card-image" alt="店舗画像">
+
+
+											<img th:unless="${house.getImageName()}" th:src="@{/images/noImage.png}"
+												class="card-img-top samuraitravel_2-horizontal-card-image"
+												alt="NO IMAGE">
+
+
+										</div>
+
+
+										<div class="col-md-8">
+
+
+											<div class="card-body">
+
+
+												<h3 class="card-title mb-3" th:text="${house.getName()}"></h3>
 
 
 
 
 
-											<p class="card-text mb-2">
-
-
-												<span th:text="${house.getDescription()}"></span>
-
-
-											</p>
+												<hr class="mb-3">
 
 
 
 
 
-											<p class="card-text mb-2">
+												<p class="card-text mb-2">
 
 
-												<small class="text-muted"
-													th:text="${'〒' + house.getPostalCode()}"></small>
+													<span th:text="${house.getDescription()}"></span>
 
 
-												<small class="text-muted" th:text="${house.getAddress()}"></small>
-
-
-											</p>
+												</p>
 
 
 
 
 
-											<p class="card-text">
+												<p class="card-text mb-2">
 
 
-												<span
-													th:text="${#numbers.formatInteger(house.getPrice(), 1, 'COMMA') + '円 / 泊'}"></span>
+													<small class="text-muted"
+														th:text="${'〒' + house.getPostalCode()}"></small>
 
 
-											</p>
+													<small class="text-muted" th:text="${house.getAddress()}"></small>
+
+
+												</p>
+
+
+
+
+
+												<p class="card-text">
+
+
+													<span
+														th:text="${#numbers.formatInteger(house.getPrice(), 1, 'COMMA') + '円 / 泊'}"></span>
+
+
+												</p>
+
+
+											</div>
 
 
 										</div>
@@ -579,78 +583,78 @@
 								</div>
 
 
-							</div>
+							</a>
 
 
-						</a>
-
-
-					</div>
+						</div>
 
 
 
 
 
-					<!-- ページネーション -->
+						<!-- ページネーション -->
 
 
-					<div th:if="${housePage.getTotalPages() > 1}" class="d-flex justify-content-center">
+						<div th:if="${housePage.getTotalPages() > 1}" class="d-flex justify-content-center">
 
 
-						<nav aria-label="民宿一覧ページ">
+							<nav aria-label="民宿一覧ページ">
 
 
-							<ul class="pagination">
+								<ul class="pagination">
 
 
-								<li class="page-item">
+									<li class="page-item">
 
 
-									<span th:if="${housePage.isFirst()}" class="page-link disabled">前</span>
+										<span th:if="${housePage.isFirst()}" class="page-link disabled">前</span>
 
 
-									<a th:unless="${housePage.isFirst()}"
-										th:href="@{/houses(page = ${housePage.getNumber() - 1}, keyword = ${keyword}, area = ${area}, price = ${price})}"
-										class="page-link samuraitravel_2-page-link">前</a>
+										<a th:unless="${housePage.isFirst()}"
+											th:href="@{/houses(page = ${housePage.getNumber() - 1}, keyword = ${keyword}, area = ${area}, price = ${price})}"
+											class="page-link samuraitravel_2-page-link">前</a>
 
 
-								</li>
+									</li>
 
 
-								<li th:each="i : ${#numbers.sequence(0, housePage.getTotalPages() - 1)}"
-									class="page-item">
+									<li th:each="i : ${#numbers.sequence(0, housePage.getTotalPages() - 1)}"
+										class="page-item">
 
 
-									<span th:if="${i == housePage.getNumber()}"
-										class="page-link active samuraitravel_2-active" th:text="${i + 1}"></span>
+										<span th:if="${i == housePage.getNumber()}"
+											class="page-link active samuraitravel_2-active" th:text="${i + 1}"></span>
 
 
-									<a th:unless="${i == housePage.getNumber()}"
-										th:href="@{/houses(page = ${i}, keyword = ${keyword}, area = ${area}, price = ${price})}"
-										class="page-link samuraitravel_2-page-link" th:text="${i + 1}"></a>
+										<a th:unless="${i == housePage.getNumber()}"
+											th:href="@{/houses(page = ${i}, keyword = ${keyword}, area = ${area}, price = ${price})}"
+											class="page-link samuraitravel_2-page-link" th:text="${i + 1}"></a>
 
 
-								</li>
+									</li>
 
 
-								<li class="page-item">
+									<li class="page-item">
 
 
-									<span th:if="${housePage.isLast()}" class="page-link disabled">次</span>
+										<span th:if="${housePage.isLast()}" class="page-link disabled">次</span>
 
 
-									<a th:unless="${housePage.isLast()}"
-										th:href="@{/houses(page = ${housePage.getNumber() + 1}, keyword = ${keyword}, area = ${area}, price = ${price})}"
-										class="page-link samuraitravel_2-page-link">次</a>
+										<a th:unless="${housePage.isLast()}"
+											th:href="@{/houses(page = ${housePage.getNumber() + 1}, keyword = ${keyword}, area = ${area}, price = ${price})}"
+											class="page-link samuraitravel_2-page-link">次</a>
 
 
-								</li>
+									</li>
 
 
-							</ul>
+								</ul>
 
 
-						</nav>
+							</nav>
+
+
+						</div>
 
 
 					</div>
@@ -662,19 +666,16 @@
 			</div>
 
 
-	</div>
-
-
-	</main>
+		</main>
 
 
 
 
 
-	<!-- フッター -->
+		<!-- フッター -->
 
 
-	<div th:replace="~{fragment :: footer}"></div>
+		<div th:replace="~{fragment :: footer}"></div>
 
 
 	</div>

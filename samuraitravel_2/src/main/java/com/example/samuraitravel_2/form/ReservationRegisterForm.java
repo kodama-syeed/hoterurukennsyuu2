@@ -1,7 +1,6 @@
 package com.example.samuraitravel_2.form;
 
 import lombok.AllArgsConstructor;
-
 import lombok.Data;
 
 @Data
@@ -12,7 +11,7 @@ public class ReservationRegisterForm {
 
 	private Integer houseId;
 
-	private Integer usedId;
+	private Integer userId;
 
 	private String checkinDate;
 

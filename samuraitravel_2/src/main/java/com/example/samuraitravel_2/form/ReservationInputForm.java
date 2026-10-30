@@ -3,9 +3,7 @@ package com.example.samuraitravel_2.form;
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.Min;
-
 import jakarta.validation.constraints.NotBlank;
-
 import jakarta.validation.constraints.NotNull;
 
 import lombok.Data;
@@ -28,7 +26,7 @@ public class ReservationInputForm {
 
 		String[] checkinDateAndCheckoutDate = getFromCheckinDateToCheckoutDate().split("から");
 
-		return LocalDate.parse(checkinDateAndCheckoutDate[0]);
+		return LocalDate.parse(checkinDateAndCheckoutDate[0].trim());
 
 	}
 
@@ -36,7 +34,7 @@ public class ReservationInputForm {
 
 		String[] checkinDateAndCheckoutDate = getFromCheckinDateToCheckoutDate().split("から");
 
-		return LocalDate.parse(checkinDateAndCheckoutDate[1]);
+		return LocalDate.parse(checkinDateAndCheckoutDate[1].trim());
 
 	}
 
