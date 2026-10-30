@@ -2,6 +2,8 @@ package com.example.samuraitravel_2.controller;
 
 import java.time.LocalDate;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -27,32 +29,38 @@ import com.example.samuraitravel_2.repository.HouseRepository;
 import com.example.samuraitravel_2.repository.ReservationRepository;
 import com.example.samuraitravel_2.security.UserDetailsImpl;
 import com.example.samuraitravel_2.service.ReservationService;
+import com.example.samuraitravel_2.service.StripeService;
 
 @Controller
 
 public class ReservationController {
 
-	private final ReservationService reservationService;
+	private final HouseRepository houseRepository;
 
 	private final ReservationRepository reservationRepository;
 
-	private final HouseRepository houseRepository;
+	private final ReservationService reservationService;
+
+	private final StripeService stripeService;
 
 	public ReservationController(ReservationRepository reservationRepository, HouseRepository houseRepository,
-			ReservationService reservationService) {
+			ReservationService reservationService, StripeService stripeService) {
 
 		this.reservationRepository = reservationRepository;
 
 		this.houseRepository = houseRepository;
 
 		this.reservationService = reservationService;
+
+		this.stripeService = stripeService;
+
 	}
 
 	@GetMapping("/reservations")
 
 	public String index(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
-			@PageableDefault(page = 0, sort = "id", direction = Direction.ASC) Pageable pageable, Model model) {
-
+			@PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable,
+			Model model) {
 		User user = userDetailsImpl.getUser();
 
 		Page<Reservation> reservationPage = reservationRepository.findByUserOrderByCreatedAtDesc(user, pageable);
@@ -66,15 +74,10 @@ public class ReservationController {
 	@GetMapping("/houses/{id}/reservations/input")
 
 	public String input(@PathVariable(name = "id") Integer id,
+			@ModelAttribute @Validated ReservationInputForm reservationInputForm, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes, Model model)
 
-			@ModelAttribute @Validated ReservationInputForm reservationInputForm,
-
-			BindingResult bindingResult,
-
-			RedirectAttributes redirectAttributes,
-
-			Model model) {
-
+	{
 		House house = houseRepository.getReferenceById(id);
 
 		Integer numberOfPeople = reservationInputForm.getNumberOfPeople();
@@ -89,7 +92,6 @@ public class ReservationController {
 						"宿泊人数が定員を超えています。");
 
 				bindingResult.addError(fieldError);
-
 			}
 
 		}
@@ -113,11 +115,8 @@ public class ReservationController {
 	@GetMapping("/houses/{id}/reservations/confirm")
 
 	public String confirm(@PathVariable(name = "id") Integer id,
-
 			@ModelAttribute ReservationInputForm reservationInputForm,
-
 			@AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
-
 			Model model) {
 
 		House house = houseRepository.getReferenceById(id);
@@ -140,15 +139,27 @@ public class ReservationController {
 		model.addAttribute("reservationRegisterForm", reservationRegisterForm);
 
 		return "reservations/confirm";
+
 	}
 
 	@PostMapping("/houses/{id}/reservations/create")
+	public String create(
+			@PathVariable("id") Integer id,
+			@ModelAttribute ReservationRegisterForm reservationRegisterForm,
+			HttpServletRequest httpServletRequest) {
 
-	public String create(@ModelAttribute ReservationRegisterForm reservationRegisterForm) {
+		House house = houseRepository.getReferenceById(id);
 
-		reservationService.create(reservationRegisterForm);
+		String sessionUrl = stripeService.createStripeSession(
+				house.getName(),
+				reservationRegisterForm,
+				httpServletRequest);
 
-		return "redirect:/reservations?reserved";
+		if (sessionUrl == null || sessionUrl.isBlank()) {
+			throw new IllegalStateException(
+					"Stripeの決済セッションを作成できませんでした。");
+		}
+
+		return "redirect:" + sessionUrl;
 	}
-
 }

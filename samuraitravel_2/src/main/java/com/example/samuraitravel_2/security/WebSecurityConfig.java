@@ -25,7 +25,8 @@ public class WebSecurityConfig {
 
 				.authorizeHttpRequests((requests) -> requests
 
-						.requestMatchers("/css/**", "/images/**", "/js/**", "/storage/**", "/", "/signup/**")
+						.requestMatchers("/css/**", "/images/**", "/js/**", "/storage/**", "/", "/signup/**", "/houses",
+								"/houses/{id}", "/stripe/webhook")
 						.permitAll()
 
 						.requestMatchers("/admin/**").hasRole("ADMIN")
@@ -52,9 +53,10 @@ public class WebSecurityConfig {
 
 						.logoutSuccessUrl("/?loggedOut")
 
-						.permitAll()
+						.permitAll())
 
-				);
+				.csrf(csrf -> csrf
+						.ignoringRequestMatchers("/stripe/webhook"));
 
 		return http.build();
 
