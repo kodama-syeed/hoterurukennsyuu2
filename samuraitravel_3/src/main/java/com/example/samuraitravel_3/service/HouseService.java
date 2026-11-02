@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.samuraitravel_3.entity.House;
+import com.example.samuraitravel_3.form.HouseEditForm;
 import com.example.samuraitravel_3.form.HouseRegisterForm;
 import com.example.samuraitravel_3.repository.HouseRepository;
 
@@ -60,6 +61,46 @@ public class HouseService {
 		house.setAddress(houseRegisterForm.getAddress());
 
 		house.setPhoneNumber(houseRegisterForm.getPhoneNumber());
+
+		houseRepository.save(house);
+
+	}
+
+	@Transactional
+
+	public void update(HouseEditForm houseEditForm) {
+
+		House house = houseRepository.getReferenceById(houseEditForm.getId());
+
+		MultipartFile imageFile = houseEditForm.getImageFile();
+
+		if (!imageFile.isEmpty()) {
+
+			String imageName = imageFile.getOriginalFilename();
+
+			String hashedImageName = generateNewFileName(imageName);
+
+			Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
+
+			copyImageFile(imageFile, filePath);
+
+			house.setImageName(hashedImageName);
+
+		}
+
+		house.setName(houseEditForm.getName());
+
+		house.setDescription(houseEditForm.getDescription());
+
+		house.setPrice(houseEditForm.getPrice());
+
+		house.setCapacity(houseEditForm.getCapacity());
+
+		house.setPostalCode(houseEditForm.getPostalCode());
+
+		house.setAddress(houseEditForm.getAddress());
+
+		house.setPhoneNumber(houseEditForm.getPhoneNumber());
 
 		houseRepository.save(house);
 
