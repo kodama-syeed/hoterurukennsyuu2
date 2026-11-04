@@ -19,6 +19,18 @@ h1 {
 
 }
 
+h2 {
+
+	font-size: 1.475rem;
+}
+
+
+h3 {
+
+	font-size: 1.25rem;
+
+}
+
 a {
 
 	color: #5196a6;
@@ -135,10 +147,53 @@ footer {
 
 }
 
-.samuraitravel_3-dropdown-item:active{
-	
+.samuraitravel_3-dropdown-item:active {
+
 	background-color: #5196a6;
-	
+
+}
+
+.samuraitravel_3-card-link {
+
+	transition: 0.3s;
+
+}
+
+.samuraitravel_3-card-link:hover {
+
+	opacity: 0.7;
+
+}
+
+.samuraitravel_3-horizontal-card-image {
+
+	width: 100%;
+
+	height: 240px;
+
+	object-fit: cover;
+
+}
+
+.samuraitravel_3-sort-box {
+
+	width: 150px;
+}
+
+.samuraitravel_3-vertical-card-image {
+
+	width: 100%;
+
+	height: 150px;
+
+	object-fit: cover;
+
+}
+
+.samuraitravel_3-search-form {
+
+	max-width: 300px;
+
 }
 
 @media screen and(min-width:1400px) {
