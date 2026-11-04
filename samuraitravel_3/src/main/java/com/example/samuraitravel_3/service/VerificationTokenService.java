@@ -25,5 +25,18 @@ public class VerificationTokenService {
 
 		VerificationToken verificationToken = new VerificationToken();
 
+		verificationToken.setUser(user);
+
+		verificationToken.setToken(token);
+
+		verificationTokenRepository.save(verificationToken);
+
 	}
+
+	public VerificationToken getVerificationToken(String token) {
+
+		return verificationTokenRepository.findByToken(token);
+
+	}
+
 }
