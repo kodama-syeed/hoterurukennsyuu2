@@ -26,7 +26,7 @@ public class WebSecurityConfig {
 				.authorizeHttpRequests((requests) -> requests
 
 						.requestMatchers("/css/**", "/images/**", "/js/**", "/storage/**", "/", "/signup/**", "/houses",
-								"/houses/{id}")
+								"/houses/{id}", "/stripe/webhook")
 						.permitAll()
 
 						.requestMatchers("/admin/**").hasRole("ADMIN")
@@ -55,7 +55,10 @@ public class WebSecurityConfig {
 
 						.permitAll()
 
-				);
+				)
+
+				.csrf((csrf) -> csrf
+						.ignoringRequestMatchers("/stripe/webhook"));
 
 		return http.build();
 

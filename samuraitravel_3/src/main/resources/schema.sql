@@ -101,27 +101,11 @@ CREATE TABLE IF NOT EXISTS reservations(
 	
 	FOREIGN KEY(user_id) REFERENCES users (id)
 	
-	
-	
-	
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+SELECT
+    h.name,
+    SUM(r.number_of_people) AS total_people
+FROM houses h
+INNER JOIN reservations r
+    ON h.id = r.house_id
+GROUP BY h.id, h.name;

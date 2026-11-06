@@ -2,6 +2,8 @@ package com.example.samuraitravel_3.controller;
 
 import java.time.LocalDate;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -27,6 +29,7 @@ import com.example.samuraitravel_3.repository.HouseRepository;
 import com.example.samuraitravel_3.repository.ReservationRepository;
 import com.example.samuraitravel_3.security.UserDetailsImpl;
 import com.example.samuraitravel_3.service.ReservationService;
+import com.example.samuraitravel_3.service.StripeService;
 
 @Controller
 public class ReservationController {
@@ -37,14 +40,18 @@ public class ReservationController {
 
 	private final ReservationService reservationService;
 
+	private final StripeService stripeService;
+
 	public ReservationController(ReservationRepository reservationRepository, HouseRepository houseRepository,
-			ReservationService reservationService) {
+			ReservationService reservationService, StripeService stripeService) {
 
 		this.reservationRepository = reservationRepository;
 
 		this.houseRepository = houseRepository;
 
 		this.reservationService = reservationService;
+
+		this.stripeService = stripeService;
 
 	}
 
@@ -145,13 +152,24 @@ public class ReservationController {
 	}
 
 	@PostMapping("/houses/{id}/reservations/create")
+	public String create(
+			@PathVariable("id") Integer id,
+			@ModelAttribute ReservationRegisterForm reservationRegisterForm,
+			HttpServletRequest httpServletRequest) {
 
-	public String create(@ModelAttribute ReservationRegisterForm reservationRegisterForm) {
+		House house = houseRepository.getReferenceById(id);
 
-		reservationService.create(reservationRegisterForm);
+		String sessionUrl = stripeService.createStripeSession(
+				house.getName(),
+				reservationRegisterForm,
+				httpServletRequest);
 
-		return "redirect:/reservations?reserved";
+		if (sessionUrl == null || sessionUrl.isBlank()) {
+			throw new IllegalStateException(
+					"Stripeの決済セッションを作成できませんでした。");
+		}
 
+		return "redirect:" + sessionUrl;
 	}
 
 }
