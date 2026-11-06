@@ -3,13 +3,19 @@ package com.example.samuraitravel_3.service;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+//改造文
+
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.samuraitravel_3.entity.House;
 import com.example.samuraitravel_3.entity.Reservation;
 import com.example.samuraitravel_3.entity.User;
-import com.example.samuraitravel_3.form.ReservationRegisterForm;
 import com.example.samuraitravel_3.repository.HouseRepository;
 import com.example.samuraitravel_3.repository.ReservationRepository;
 import com.example.samuraitravel_3.repository.UserRepository;
@@ -24,6 +30,8 @@ public class ReservationService {
 
 	private final UserRepository userRepository;
 
+	private static final Logger logger = LoggerFactory.getLogger(ReservationService.class);
+
 	public ReservationService(ReservationRepository reservationRepository, HouseRepository houseRepository,
 			UserRepository userRepository) {
 
@@ -36,17 +44,25 @@ public class ReservationService {
 
 	@Transactional
 
-	public void create(ReservationRegisterForm reservationRegisterForm) {
+	public void create(Map<String, String> paymentIntentObject) {
 
 		Reservation reservation = new Reservation();
 
-		House house = houseRepository.getReferenceById(reservationRegisterForm.getHouseId());
+		Integer houseId = Integer.valueOf(paymentIntentObject.get("houseId"));
 
-		User user = userRepository.getReferenceById(reservationRegisterForm.getUserId());
+		Integer userId = Integer.valueOf(paymentIntentObject.get("userId"));
 
-		LocalDate checkinDate = LocalDate.parse(reservationRegisterForm.getCheckinDate());
+		House house = houseRepository.getReferenceById(houseId);
 
-		LocalDate checkoutDate = LocalDate.parse(reservationRegisterForm.getCheckoutDate());
+		User user = userRepository.getReferenceById(userId);
+
+		LocalDate checkinDate = LocalDate.parse(paymentIntentObject.get("checkinDate"));
+
+		LocalDate checkoutDate = LocalDate.parse(paymentIntentObject.get("checkoutDate"));
+
+		Integer numberOfPeople = Integer.valueOf(paymentIntentObject.get("numberOfPeople"));
+
+		Integer amount = Integer.valueOf(paymentIntentObject.get("amount"));
 
 		reservation.setHouse(house);
 
@@ -56,11 +72,14 @@ public class ReservationService {
 
 		reservation.setCheckoutDate(checkoutDate);
 
-		reservation.setNumberOfPeople(reservationRegisterForm.getNumberOfPeople());
+		reservation.setNumberOfPeople(numberOfPeople);
 
-		reservation.setAmount(reservationRegisterForm.getAmount());
+		reservation.setAmount(amount);
 
-		reservationRepository.save(reservation);
+		Reservation savedReservation = reservationRepository.save(reservation);
+
+		logger.info("予約をDBに保存しました。reservationId={}",
+				savedReservation.getId());
 	}
 
 	public boolean isWithinCapacity(Integer numberOfPeople, Integer capacity) {
@@ -76,6 +95,12 @@ public class ReservationService {
 		int amount = price * (int) numberOfNights;
 
 		return amount;
+	}
+
+	public List<Object[]> reservationUsers() {
+
+		return reservationRepository.reservationUsers();
+
 	}
 
 }
